@@ -21,7 +21,7 @@ public class MainMenu : MonoSingleton<MainMenu>
 
         _submitAction.action.performed += OnSubmitPerformed;
 
-        SetMainMenuActive(false);
+        SetMainMenuActive(true);
     }
 
     private void OnSubmitPerformed(InputAction.CallbackContext context)
@@ -38,6 +38,8 @@ public class MainMenu : MonoSingleton<MainMenu>
     {
         _playerControls.SwitchToPlayerActionMap();
         SetMainMenuActive(false);
+
+        MessagesBroker.Instance.SendMessage(MessagingType.GameStarted);//Inform those who want to know about the game starting
     }
 
     public void OnPause()

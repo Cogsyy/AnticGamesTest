@@ -1,14 +1,22 @@
+using TMPro;
 using UnityEngine;
 
-public abstract class UnitBase : MonoBehaviour
+public abstract class UnitBase : MonoBehaviour, IUnit
 {
-    void Start()
+    [SerializeField] private TMP_Text _unitLabel;
+
+    public virtual void Initialize(UnitSettings settings)
     {
         
     }
 
-    void Update()
+    public Vector2 GetPosition()
     {
-        
+        return transform.position;
+    }
+
+    protected void SetUnitName(string unitName)
+    {
+        _unitLabel.text = unitName;
     }
 }

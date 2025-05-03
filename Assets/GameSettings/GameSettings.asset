@@ -12,3 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f1e034a239f354f9671ab5c317398f, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
+  enemyCount: 20
+  gridSettings:
+    gridWidth: 50
+    cellSize: 1

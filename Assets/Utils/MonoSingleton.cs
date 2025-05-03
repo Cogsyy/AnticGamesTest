@@ -2,6 +2,8 @@ using UnityEngine;
 
 public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
+    [SerializeField] private bool dontDestroyOnLoad = true;
+
     public static T Instance { get; private set; }
 
     protected virtual void Awake()
@@ -13,6 +15,10 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
         }
 
         Instance = this as T;
-        DontDestroyOnLoad(gameObject);
+
+        if (dontDestroyOnLoad)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 }

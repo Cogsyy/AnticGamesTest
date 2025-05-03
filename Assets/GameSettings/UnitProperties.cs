@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 //Demonstrate proper ScriptableObject usage for both design-time and runtime data
@@ -6,5 +7,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "UnitProperties", menuName = "Scriptable Objects/UnitProperties")]
 public class UnitProperties : ScriptableObject
 {
-    //Speed, health, point values
+    public UnitSettings antProperties;
+    public UnitSettings aphidProperties;
+    public UnitSettings beetleProperties;
+    public UnitSettings ladybugProperties;
+}
+
+[Serializable]
+public struct UnitSettings
+{
+    public int health;
+    public float moveSpeed;
 }

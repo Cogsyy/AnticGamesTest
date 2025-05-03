@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class AntUnit : UnitBase
+public class BeetleUnit : UnitBase
 {
     public override void Initialize(UnitSettings settings)
     {
         base.Initialize(settings);
-        SetUnitName("Ant");
+        SetUnitName("Beetle");
     }
 }

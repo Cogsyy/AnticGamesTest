@@ -13,15 +13,17 @@ public class PlayerControls : MonoBehaviour
 
     private void Start()
     {
+        //Starting flow -> Main menu, then enable player controls on game start
         _playerInputActions = new InputSystem_Actions();
-        _playerInputActions.Player.Enable();
+        _playerInputActions.Player.Disable();
+        _playerInputActions.UI.Enable();
     }
 
     private void Update()
     {
-        _moveInput = _playerInputActions.Player.Move.ReadValue<Vector2>();
+        //_moveInput = _playerInputActions.Player.Move.ReadValue<Vector2>();
 
-        transform.Translate(_moveInput * speed * Time.deltaTime);
+        //transform.Translate(_moveInput * speed * Time.deltaTime);
     }
 
     #region control map switching / UI

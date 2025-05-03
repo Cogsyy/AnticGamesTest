@@ -9,6 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f20aab3ddbf8c14a92b84df84a96b82, type: 3}
+  m_Script: {fileID: 11500000, guid: e9dad5a2ceec74240a3996c63cd412bf, type: 3}
   m_Name: UnitProperties
   m_EditorClassIdentifier: 
+  antProperties:
+    health: 5
+    moveSpeed: 5
+  aphidProperties:
+    health: 1
+    moveSpeed: 7
+  beetleProperties:
+    health: 3
+    moveSpeed: 0.5
+  ladybugProperties:
+    health: 2
+    moveSpeed: 8
