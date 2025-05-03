@@ -13,11 +13,13 @@ public class BeetleFactory : UnitFactory
         BeetleUnit newUnit = Instantiate(beetlePrefab, position, Quaternion.identity, transform);
 
         newUnit.Initialize(unitProperties.beetleProperties);
+
         LinearMovement movement = newUnit.AddComponent<LinearMovement>();
         
         movement.SetTargetTransform(flagTransform);
         movement.SetSpeed(unitProperties.beetleProperties.moveSpeed);
         movement.SetGrid(grid);
+        movement.OnReachedTarget += newUnit.OnReachedTarget;
 
         return newUnit;
     }

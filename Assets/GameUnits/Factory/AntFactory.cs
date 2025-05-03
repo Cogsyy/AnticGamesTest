@@ -13,6 +13,13 @@ public class AntFactory : UnitFactory
 
         newUnit.Initialize(unitProperties.antProperties);
 
+        LinearMovement movement = newUnit.AddComponent<LinearMovement>();
+
+        movement.SetSpeed(unitProperties.antProperties.moveSpeed);
+        movement.SetGrid(grid);
+        movement.OnReachedTarget += newUnit.OnReachedTarget;
+        movement.OnLeftTarget += newUnit.OnLeftTarget;
+
         return newUnit;
     }
 }

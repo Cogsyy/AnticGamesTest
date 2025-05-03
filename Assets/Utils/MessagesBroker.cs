@@ -7,6 +7,8 @@ public enum MessagingType
     None = 0,
     GameStarted,
     ResetGame,
+    EnemyReachedFlag,
+    UnitDied,
 }
 
 public class MessagesBroker : MonoSingleton<MessagesBroker>

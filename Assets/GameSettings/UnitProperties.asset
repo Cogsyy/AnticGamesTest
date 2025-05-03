@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   antProperties:
     health: 5
-    moveSpeed: 5
+    moveSpeed: 2
   aphidProperties:
     health: 1
     moveSpeed: 7
   beetleProperties:
     health: 3
-    moveSpeed: 0.5
+    moveSpeed: 0.2
   ladybugProperties:
     health: 2
     moveSpeed: 8

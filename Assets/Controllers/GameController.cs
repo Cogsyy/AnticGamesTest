@@ -4,16 +4,21 @@ using SpatialPartitionSystem;
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField] private ResultsPanel _resultsPanel;
     [SerializeField] private GameSettings _gameSettings;
     [SerializeField] private Transform _flag;
     [SerializeField] private AntFactory _antFactory;
     [SerializeField] private BeetleFactory _beetleFactory;
+
+    private int _enemiesEliminated = 0;
 
     private Grid<List<IUnit>> _grid;
 
     private void Awake()
     {
         MessagesBroker.Instance.AddListener(MessagingType.GameStarted, OnGameStarted);
+        MessagesBroker.Instance.AddListener(MessagingType.EnemyReachedFlag, OnEnemyReachedFlag);
+        MessagesBroker.Instance.AddListener<UnitBase>(MessagingType.UnitDied, OnUnitDied);
     }
 
     private void OnGameStarted()
@@ -30,6 +35,11 @@ public class GameController : MonoBehaviour
 
             IUnit beetle = _beetleFactory.CreateUnit(randomPosition, _flag.position, _grid);
             _grid.RegisterUnit(beetle);
+
+            if (i == 0)//Temporary
+            {
+                ((AntUnit)ant).GetComponent<MovementBase>().SetTargetTransform(((BeetleUnit)beetle).transform);
+            }
         }
     }
 
@@ -49,6 +59,26 @@ public class GameController : MonoBehaviour
                 _grid.AddCell(i, j, new List<IUnit>());
             }
         }
+    }
+
+    private void OnEnemyReachedFlag()
+    {
+        _resultsPanel.ShowResults(victory: false, _enemiesEliminated);//parameter specification for clarity
+    }
+
+    private void OnUnitDied(UnitBase deadUnit)
+    {
+        _grid.UnregisterUnit(deadUnit);
+        if (deadUnit is AntUnit)
+        {
+            
+        }
+        else 
+        {
+            _enemiesEliminated++;
+        }
+
+        Destroy(deadUnit.gameObject);
     }
 
     private void Update()
