@@ -44,7 +44,7 @@ public class MovementBase : MonoBehaviour
         if (target != null)
         {
             float distance = Vector3.Distance(transform.position, target.position);
-            if (distance < 0.1f)//Stop if close enough
+            if (distance < 1f)//Stop if close enough
             {
                 if (!reachedTarget)
                 {

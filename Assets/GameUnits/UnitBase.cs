@@ -8,12 +8,18 @@ public abstract class UnitBase : MonoBehaviour, IUnit
     protected int maxHealth;
     protected int currentHealth;
     protected int damage;
+    protected float attackTimeInSeconds;
+    protected float attackTimerSeconds;
+
+    protected Transform currentTarget;
 
     public virtual void Initialize(UnitSettings settings)
     {
         maxHealth = settings.health;
         currentHealth = maxHealth;
         damage = settings.damage;
+        attackTimeInSeconds = settings.attackTimeInSeconds;
+        attackTimerSeconds = attackTimeInSeconds;
     }
 
     public Vector2 GetPosition()
@@ -28,12 +34,12 @@ public abstract class UnitBase : MonoBehaviour, IUnit
 
     public virtual void OnReachedTarget(Transform target)
     {
-
+        currentTarget = target;
     }
 
     public virtual void OnLeftTarget(Transform target)
     {
-
+        currentTarget = null;
     }
 
     public void DealDamage(int damageAmount)
@@ -43,5 +49,39 @@ public abstract class UnitBase : MonoBehaviour, IUnit
         {
             MessagesBroker.Instance.SendMessage(MessagingType.UnitDied, this);//Inform everyone who wants to know that a unit died.
         }
+    }
+
+    protected virtual void Update()
+    {
+        if (attackTimerSeconds < attackTimeInSeconds)
+        {
+            attackTimerSeconds += Time.deltaTime;
+        }
+        else
+        {
+            TryDealDamage();
+        }
+    }
+
+    protected virtual void TryDealDamage()
+    {
+        if (currentTarget == null)
+        {
+            return;
+        }
+
+        UnitBase unit = currentTarget.GetComponent<UnitBase>();
+
+        if (unit != null)
+        {
+            attackTimerSeconds = 0;
+            unit.DealDamage(damage);
+            OnDamageDealt(damage);
+        }
+    }
+
+    protected virtual void OnDamageDealt(int damageDealt)
+    {
+
     }
 }

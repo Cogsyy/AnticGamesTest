@@ -15,12 +15,20 @@ MonoBehaviour:
   antProperties:
     health: 5
     moveSpeed: 2
+    damage: 1
+    attackTimeInSeconds: 1
   aphidProperties:
     health: 1
     moveSpeed: 7
+    damage: 1
+    attackTimeInSeconds: 1
   beetleProperties:
     health: 3
     moveSpeed: 0.2
+    damage: 1
+    attackTimeInSeconds: 1
   ladybugProperties:
     health: 2
     moveSpeed: 8
+    damage: 1
+    attackTimeInSeconds: 1

@@ -19,4 +19,5 @@ public struct UnitSettings
     public int health;
     public float moveSpeed;
     public int damage;
+    public float attackTimeInSeconds;
 }
