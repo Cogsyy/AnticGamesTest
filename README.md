@@ -38,4 +38,4 @@ It does have its benefits though, at minimum it can be reused for different type
 - The ant flashes red when he attacks.
 
 ## Preview
-!(Preview.mp4)
+- See Preview.mp4 in the root directory
