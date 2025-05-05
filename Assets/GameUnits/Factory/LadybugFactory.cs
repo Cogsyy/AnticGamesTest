@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class LadybugFactory : UnitFactory
 {
-    [SerializeField] private LadybugUnit ladybugPrefab;
+    [SerializeField] private LadybugUnit _ladybugPrefab;
+    [SerializeField] private Transform _flag;
 
-    public override IUnit CreateUnit(Vector3 position, Vector3 flagPosition, Grid<List<IUnit>> grid)
+    public override IUnit CreateUnit(Vector3 position, Grid<List<IUnit>> grid)
     {
-        LadybugUnit newUnit = Instantiate(ladybugPrefab, position, Quaternion.identity, transform);
+        LadybugUnit newUnit = Instantiate(_ladybugPrefab, position, Quaternion.identity, transform);
 
         newUnit.Initialize(unitProperties.ladybugProperties);
+        newUnit.flagUnit = _flag as IUnit;
 
         return newUnit;
     }

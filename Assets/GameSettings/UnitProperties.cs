@@ -20,4 +20,6 @@ public struct UnitSettings
     public float moveSpeed;
     public int damage;
     public float attackTimeInSeconds;
+    public bool isAIMode;
+    public float distanceToFlagThreshold;
 }

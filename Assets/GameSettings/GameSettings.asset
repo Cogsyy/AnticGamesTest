@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   enemyCount: 20
+  allyAntCount: 1
   gridSettings:
+    MIN_WORLD_X: -20
+    MIN_WORLD_Y: -20
     gridWidth: 50
     cellSize: 1

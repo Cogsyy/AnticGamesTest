@@ -6,40 +6,33 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private ResultsPanel _resultsPanel;
     [SerializeField] private GameSettings _gameSettings;
-    [SerializeField] private Transform _flag;
     [SerializeField] private AntFactory _antFactory;
     [SerializeField] private BeetleFactory _beetleFactory;
+    [SerializeField] private AphidFactory _aphidFactory;
 
     private int _enemiesEliminated = 0;
+    private bool _gameStarted;
 
-    private Grid<List<IUnit>> _grid;
+    public Grid<List<IUnit>> grid { get; private set; }
 
     private void Awake()
     {
         MessagesBroker.Instance.AddListener(MessagingType.GameStarted, OnGameStarted);
         MessagesBroker.Instance.AddListener(MessagingType.EnemyReachedFlag, OnEnemyReachedFlag);
         MessagesBroker.Instance.AddListener<UnitBase>(MessagingType.UnitDied, OnUnitDied);
+        MessagesBroker.Instance.AddListener<bool>(MessagingType.AIModeToggled, OnAIModeToggled);
     }
 
     private void OnGameStarted()
     {
-        //Spawn some enemies
-        IUnit ant = _antFactory.CreateUnit(new Vector3(5, 3, 0), _flag.position, _grid);
-        _grid.RegisterUnit(ant);
-
-        for (int i = 0; i < _gameSettings.enemyCount; i++)
+        if (!_gameStarted)
         {
-            Vector2 randomPosition = Random.insideUnitCircle;
-            randomPosition.x *= 10f;
-            randomPosition.y *= 10f;
-
-            IUnit beetle = _beetleFactory.CreateUnit(randomPosition, _flag.position, _grid);
-            _grid.RegisterUnit(beetle);
-
-            if (i == 0)//Temporary
-            {
-                ((AntUnit)ant).GetComponent<MovementBase>().SetTargetTransform(((BeetleUnit)beetle).transform);
-            }
+            _gameStarted = true;
+            //Spawn some friendly ants
+            SpawnRandomUnits(_antFactory, _gameSettings.allyAntCount, 1, 3);
+            //Spawn enemy units
+            SpawnRandomUnits(_beetleFactory, _gameSettings.enemyCount / 2, 3, 10);
+            SpawnRandomUnits(_aphidFactory, _gameSettings.enemyCount / 2, 3, 10);
         }
     }
 
@@ -50,14 +43,40 @@ public class GameController : MonoBehaviour
 
     private void InitializeGrid()
     {
-        _grid = new Grid<List<IUnit>>(_gameSettings.gridSettings);
+        grid = new Grid<List<IUnit>>(_gameSettings.gridSettings);
 
         for (int i = 0; i < _gameSettings.gridSettings.gridWidth; i++)
         {
             for (int j = 0; j < _gameSettings.gridSettings.gridWidth; j++)
             {
-                _grid.AddCell(i, j, new List<IUnit>());
+                grid.AddCell(i, j, new List<IUnit>());
             }
+        }
+    }
+
+    private void OnAIModeToggled(bool isAIMode)
+    {
+        //Update the properties of the ant for the factories if AI mode is toggled before play, or for when the game is reset
+        _antFactory.unitProperties.antProperties.isAIMode = isAIMode;
+    }
+
+    private void SpawnRandomUnits(UnitFactory unitFactory, int unitAmount, float radiusMin, float radiusMax)
+    {
+        for (int i = 0; i < unitAmount; i++)
+        {
+            float angle = Random.Range(0f, Mathf.PI * 2);
+
+            //Correct random radius for uniform distribution
+            float radius = Mathf.Sqrt(Random.Range(radiusMin * radiusMin, radiusMax * radiusMax));
+
+            //Convert polar to Cartesian coordinates
+            Vector2 randomPosition = new Vector2(
+                Mathf.Cos(angle) * radius,
+                Mathf.Sin(angle) * radius
+            );
+
+            IUnit newUnit = unitFactory.CreateUnit(randomPosition, grid);
+            grid.RegisterUnit(newUnit);
         }
     }
 
@@ -68,14 +87,15 @@ public class GameController : MonoBehaviour
 
     private void OnUnitDied(UnitBase deadUnit)
     {
-        _grid.UnregisterUnit(deadUnit);
-        if (deadUnit is AntUnit)
-        {
-            
-        }
-        else 
+        grid.UnregisterUnit(deadUnit);
+        if (deadUnit is AntUnit == false)
         {
             _enemiesEliminated++;
+
+            if (_enemiesEliminated >= _gameSettings.enemyCount)
+            {
+                _resultsPanel.ShowResults(victory: true, _enemiesEliminated);
+            }
         }
 
         Destroy(deadUnit.gameObject);

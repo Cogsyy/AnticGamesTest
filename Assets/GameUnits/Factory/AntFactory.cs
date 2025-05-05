@@ -5,13 +5,16 @@ using UnityEngine;
 
 public class AntFactory : UnitFactory
 {
-    [SerializeField] private AntUnit antPrefab;
+    [SerializeField] private AntUnit _antPrefab;
+    [SerializeField] private Transform _flag;
+    [SerializeField] private DebugPanel _debugPanel;
 
-    public override IUnit CreateUnit(Vector3 position, Vector3 flagPosition, Grid<List<IUnit>> grid)
+    public override IUnit CreateUnit(Vector3 position, Grid<List<IUnit>> grid)
     {
-        AntUnit newUnit = Instantiate(antPrefab, position, Quaternion.identity, transform);
+        AntUnit newUnit = Instantiate(_antPrefab, position, Quaternion.identity, transform);
 
         newUnit.Initialize(unitProperties.antProperties);
+        newUnit.flagUnit = _flag.GetComponent<IUnit>();
 
         LinearMovement movement = newUnit.AddComponent<LinearMovement>();
 
@@ -19,6 +22,8 @@ public class AntFactory : UnitFactory
         movement.SetGrid(grid);
         movement.OnReachedTarget += newUnit.OnReachedTarget;
         movement.OnLeftTarget += newUnit.OnLeftTarget;
+
+        _debugPanel.RegisterAnt(newUnit);
 
         return newUnit;
     }

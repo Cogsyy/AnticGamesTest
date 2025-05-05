@@ -3,13 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
 {
+    private const string TAG_ENEMY = "Enemy";
+
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private InputActionReference move;
-    [SerializeField] private float speed = 5f;
+    [SerializeField] private GameController _gameController;
 
     private InputSystem_Actions _playerInputActions;
-
-    private Vector2 _moveInput;
+    private Camera _mainCamera;
 
     private void Start()
     {
@@ -17,13 +18,31 @@ public class PlayerControls : MonoBehaviour
         _playerInputActions = new InputSystem_Actions();
         _playerInputActions.Player.Disable();
         _playerInputActions.UI.Enable();
+
+        _mainCamera = Camera.main;
     }
 
-    private void Update()
+    public void OnClick(InputAction.CallbackContext context)
     {
-        //_moveInput = _playerInputActions.Player.Move.ReadValue<Vector2>();
+        if (!context.performed)
+        {
+            return;
+        }
 
-        //transform.Translate(_moveInput * speed * Time.deltaTime);
+        //Perform a raycast from the mouse position
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        Ray ray = _mainCamera.ScreenPointToRay(mousePosition);
+
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+
+        if (hit.collider != null && hit.transform.CompareTag(TAG_ENEMY))
+        {
+            IUnit closestAntAlly = _gameController.grid.FindClosestUnitTo(hit.transform.GetComponent<IUnit>(), friendly:true);
+            if (closestAntAlly != null)
+            {
+                ((AntUnit)closestAntAlly).SetMoveTarget(hit.transform);
+            }
+        }
     }
 
     #region control map switching / UI

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -5,13 +6,16 @@ public abstract class UnitBase : MonoBehaviour, IUnit
 {
     [SerializeField] private TMP_Text _unitLabel;
 
+    [NonSerialized] public IUnit flagUnit;//Assigned by the factory
+
     protected int maxHealth;
     protected int currentHealth;
     protected int damage;
     protected float attackTimeInSeconds;
     protected float attackTimerSeconds;
+    protected float distanceToFlagThreshold;
 
-    protected Transform currentTarget;
+    public Transform currentTarget { get; protected set; }
 
     public virtual void Initialize(UnitSettings settings)
     {
@@ -20,11 +24,17 @@ public abstract class UnitBase : MonoBehaviour, IUnit
         damage = settings.damage;
         attackTimeInSeconds = settings.attackTimeInSeconds;
         attackTimerSeconds = attackTimeInSeconds;
+        distanceToFlagThreshold = settings.distanceToFlagThreshold;
     }
 
     public Vector2 GetPosition()
     {
         return transform.position;
+    }
+
+    public Transform GetTransform()
+    {
+        return transform;
     }
 
     protected void SetUnitName(string unitName)
@@ -83,5 +93,11 @@ public abstract class UnitBase : MonoBehaviour, IUnit
     protected virtual void OnDamageDealt(int damageDealt)
     {
 
+    }
+
+    public bool IsIdle()
+    {
+        //Can add other criteria here if needed
+        return currentTarget == null;
     }
 }

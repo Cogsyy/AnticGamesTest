@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class UnitFactory : MonoBehaviour
 {
-    [SerializeField] protected UnitProperties unitProperties;
+    [SerializeField] public UnitProperties unitProperties;
 
-    public abstract IUnit CreateUnit(Vector3 position, Vector3 flagPosition, Grid<List<IUnit>> grid);
+    public abstract IUnit CreateUnit(Vector3 position, Grid<List<IUnit>> grid);
 }

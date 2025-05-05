@@ -14,21 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   antProperties:
     health: 5
-    moveSpeed: 2
+    moveSpeed: 3
     damage: 1
-    attackTimeInSeconds: 1
+    attackTimeInSeconds: 0.7
+    isAIMode: 0
+    distanceToFlagThreshold: 2
   aphidProperties:
     health: 1
-    moveSpeed: 7
+    moveSpeed: 0.25
     damage: 1
     attackTimeInSeconds: 1
+    isAIMode: 0
+    distanceToFlagThreshold: 0
   beetleProperties:
     health: 3
-    moveSpeed: 0.2
+    moveSpeed: 0.15
     damage: 1
     attackTimeInSeconds: 1
+    isAIMode: 0
+    distanceToFlagThreshold: 0
   ladybugProperties:
     health: 2
     moveSpeed: 8
     damage: 1
     attackTimeInSeconds: 1
+    isAIMode: 0
+    distanceToFlagThreshold: 0

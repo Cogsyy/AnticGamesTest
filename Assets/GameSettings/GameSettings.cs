@@ -9,7 +9,7 @@ public class GameSettings : ScriptableObject
 {
     //Spawn rates, difficulty settings
     public int enemyCount = 20;
-
+    public int allyAntCount = 4;
     public GridSettings gridSettings;
 
 }

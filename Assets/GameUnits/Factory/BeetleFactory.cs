@@ -5,18 +5,19 @@ using UnityEngine;
 
 public class BeetleFactory : UnitFactory
 {
-    [SerializeField] private BeetleUnit beetlePrefab;
-    [SerializeField] private Transform flagTransform;
+    [SerializeField] private BeetleUnit _beetlePrefab;
+    [SerializeField] private Transform _flag;
 
-    public override IUnit CreateUnit(Vector3 position, Vector3 flagPosition, Grid<List<IUnit>> grid)
+    public override IUnit CreateUnit(Vector3 position, Grid<List<IUnit>> grid)
     {
-        BeetleUnit newUnit = Instantiate(beetlePrefab, position, Quaternion.identity, transform);
+        BeetleUnit newUnit = Instantiate(_beetlePrefab, position, Quaternion.identity, transform);
 
         newUnit.Initialize(unitProperties.beetleProperties);
+        newUnit.flagUnit = _flag as IUnit;
 
         LinearMovement movement = newUnit.AddComponent<LinearMovement>();
         
-        movement.SetTargetTransform(flagTransform);
+        movement.SetMoveTarget(_flag);
         movement.SetSpeed(unitProperties.beetleProperties.moveSpeed);
         movement.SetGrid(grid);
         movement.OnReachedTarget += newUnit.OnReachedTarget;

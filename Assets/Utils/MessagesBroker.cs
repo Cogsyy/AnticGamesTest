@@ -9,6 +9,7 @@ public enum MessagingType
     ResetGame,
     EnemyReachedFlag,
     UnitDied,
+    AIModeToggled,
 }
 
 public class MessagesBroker : MonoSingleton<MessagesBroker>
@@ -98,7 +99,8 @@ public class MessagesBroker : MonoSingleton<MessagesBroker>
     {
         if (!_messageList.ContainsKey(message))
         {
-            Debug.LogError("MessagesBroker does not contain message: " + message);
+            //Can log it if desired, but it may not be an error
+            //Debug.LogError("MessagesBroker does not contain message: " + message);
             return;
         }
 
