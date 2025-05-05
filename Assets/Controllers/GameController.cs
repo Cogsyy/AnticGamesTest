@@ -15,14 +15,6 @@ public class GameController : MonoBehaviour
 
     public Grid<List<IUnit>> grid { get; private set; }
 
-    private void Awake()
-    {
-        MessagesBroker.Instance.AddListener(MessagingType.GameStarted, OnGameStarted);
-        MessagesBroker.Instance.AddListener(MessagingType.EnemyReachedFlag, OnEnemyReachedFlag);
-        MessagesBroker.Instance.AddListener<UnitBase>(MessagingType.UnitDied, OnUnitDied);
-        MessagesBroker.Instance.AddListener<bool>(MessagingType.AIModeToggled, OnAIModeToggled);
-    }
-
     private void OnGameStarted()
     {
         if (!_gameStarted)
@@ -38,6 +30,11 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        MessagesBroker.Instance.AddListener(MessagingType.GameStarted, OnGameStarted);
+        MessagesBroker.Instance.AddListener(MessagingType.EnemyReachedFlag, OnEnemyReachedFlag);
+        MessagesBroker.Instance.AddListener<UnitBase>(MessagingType.UnitDied, OnUnitDied);
+        MessagesBroker.Instance.AddListener<bool>(MessagingType.AIModeToggled, OnAIModeToggled);
+
         InitializeGrid();
     }
 
