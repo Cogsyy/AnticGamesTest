@@ -36,6 +36,7 @@ It does have its benefits though, at minimum it can be reused for different type
 - I've also included UML diagrams in the root folder.
 - The game is not built to handle resetting things properly, please restart the application for this!
 - The ant flashes red when he attacks.
+- The aphids will group with other enemy units at the same time as moving towards the flag, and have one health. The beetles are slower, and have 3 health each.
 
 ## Preview
 - See Preview.mp4 in the root directory
