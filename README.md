@@ -28,8 +28,9 @@ It does have its benefits though, at minimum it can be reused for different type
 - This is also my first time working with the new Unity Input System, and I quite like it so far. One thing of note, it seems like there are a lot of ways to work with the asset, so I am uncertain if my usage was optimal or not, but it seems nice so far for my first go at it.
 
 ## instructions
-- Game and unit settings can be found in Assets > GameSettings
+- Game and unit settings can be found in Assets > GameSettings. The game will work with multiple friendly ants as well
 - Pause with esc key, and can use the arrow keys/WASD to navigate menus + enter for submit, or use mouse and keyboard.
+- Left click to target an enemy unless AI mode is on from the pause menu
 - I've included a build under the Build Folder
 - I've also included UML diagrams in the root folder.
 - The game is not built to handle resetting things properly, please restart the application for this!
