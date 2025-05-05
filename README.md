@@ -36,3 +36,6 @@ It does have its benefits though, at minimum it can be reused for different type
 - I've also included UML diagrams in the root folder.
 - The game is not built to handle resetting things properly, please restart the application for this!
 - The ant flashes red when he attacks.
+
+## Preview
+!(Preview.mp4)
