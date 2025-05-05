@@ -20,6 +20,7 @@ One thing I would consider missing is an overall game state system, something th
 This is my first time working with a spatial partitioning system, and it has been interesting. It works as was described in the instructions, but when it comes to searching, I use a simple algorithm to check
 all the spaces around a given unit in a square and check if there are any units there. If there is, I'll do a distance check, and if it meets search criteria, it stops there, since the closest unit is going to be one of the units inside the search radius since it starts at the unit itself and works outward. 
 If a unit is not found, the search radius increases to one tile further in all directions in a square shape, again, stopping if a unit meets the search criteria.
+In addition to this, the ant will search for the closest enemy around the flag and check its distance. If it's not within a threatening range, then it will prioritize units closer to himself. 
 
 ## Observations
 - This is my first time working with a spatial partitioning system. One thing I noticed was a lot of examples used a Grid class that doesn't take a generic <TCell> param. In this project I sticked with the generic param, but as development continued,
@@ -34,3 +35,4 @@ It does have its benefits though, at minimum it can be reused for different type
 - I've included a build under the Build Folder
 - I've also included UML diagrams in the root folder.
 - The game is not built to handle resetting things properly, please restart the application for this!
+- The ant flashes red when he attacks.
